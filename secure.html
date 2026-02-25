@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Levu — Secure Access</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--accent:#1db954;--accent2:#0d8c3c;--dark:#0a1a0d;--muted:#4a7a58;--border:rgba(29,185,84,0.2);}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#fff 0%,#edfaf3 60%,#d0f0e0 100%);font-family:'Inter',sans-serif;padding:20px;}
+.box{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:48px 44px;width:100%;max-width:440px;box-shadow:0 20px 60px rgba(29,185,84,0.08);}
+.logo{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:8px;}
+.logo span{color:var(--accent);}
+.subtitle{font-size:0.88rem;color:var(--muted);margin-bottom:36px;line-height:1.6;}
+label{display:block;font-size:0.75rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+input{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:0.95rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;transition:border-color 0.2s;margin-bottom:20px;background:#fff;}
+input:focus{border-color:var(--accent);}
+.btn{width:100%;padding:13px;border-radius:40px;background:var(--accent);color:#fff;font-weight:700;font-size:0.95rem;font-family:'Inter',sans-serif;border:none;cursor:pointer;transition:background 0.2s,transform 0.15s;margin-top:4px;}
+.btn:hover{background:var(--accent2);transform:translateY(-1px);}
+.btn:disabled{background:#ccc;cursor:not-allowed;transform:none;}
+.msg{border-radius:10px;padding:12px 16px;font-size:0.88rem;margin-bottom:20px;display:none;}
+.msg.error{background:#fff0f0;border:1.5px solid #f0a0a0;color:#c00;}
+
+#content{display:none;width:100%;max-width:820px;background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:48px 44px;box-shadow:0 20px 60px rgba(29,185,84,0.08);}
+.content-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;flex-wrap:wrap;gap:16px;}
+.content-logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--dark);}
+.content-logo span{color:var(--accent);}
+.timer-wrap{display:flex;align-items:center;gap:8px;}
+.timer-label{font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+.timer{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);}
+.timer.warn{color:#e05;}
+.ip-section h2{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:var(--dark);margin-bottom:10px;}
+.ip-section p{font-size:0.92rem;color:var(--muted);line-height:1.8;margin-bottom:14px;}
+.ip-section h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;color:var(--dark);margin:20px 0 8px;}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.tag{padding:5px 13px;border-radius:40px;background:rgba(29,185,84,0.08);border:1px solid var(--border);font-size:0.8rem;font-weight:600;color:var(--accent2);}
+.watermark{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:0.04;display:none;align-items:center;justify-content:center;transform:rotate(-28deg);font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#000;white-space:nowrap;letter-spacing:0.08em;}
+.dead-box{text-align:center;padding:48px 20px;}
+.dead-box h2{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--dark);margin-bottom:12px;}
+.dead-box p{font-size:0.93rem;color:var(--muted);line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="watermark" id="watermark"></div>
+
+<div class="box" id="loginBox">
+  <div class="logo">Lev<span>u</span></div>
+  <p class="subtitle">Restricted access. Authorized recipients only.<br/>Enter your credentials to continue.</p>
+  <div class="msg error" id="errorMsg"></div>
+  <label for="emailInput">Email Address</label>
+  <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="off"/>
+  <label for="passInput">Access Password</label>
+  <input type="password" id="passInput" placeholder="Enter your password" autocomplete="off"/>
+  <button class="btn" id="loginBtn" onclick="attemptLogin()">Access Secure Content</button>
+</div>
+
+<div id="content">
+  <div class="content-header">
+    <div class="content-logo">Lev<span>u</span> — Confidential</div>
+    <div class="timer-wrap">
+      <span class="timer-label">Session expires in</span>
+      <span class="timer" id="timerDisplay">5:00</span>
+    </div>
+  </div>
+  <div class="ip-section">
+    <h2>Photonic Neural Network — Proprietary Architecture</h2>
+    <p>This document contains confidential intellectual property belonging to Levu. Unauthorized distribution, reproduction, or transmission is strictly prohibited.</p>
+    <h3>Core Innovation</h3>
+    <p>Levu's nonlinear PIC platform performs end-to-end optical inference — including nonlinear activation — without any electro-optic conversion between layers.</p>
+    <h3>Key Claims</h3>
+    <div class="tag-row">
+      <span class="tag">End-to-End Optical Inference</span>
+      <span class="tag">On-Chip Nonlinear Activation</span>
+      <span class="tag">WDM Layer Stacking</span>
+      <span class="tag">Sub-1pJ Switching Energy</span>
+      <span class="tag">Foundry Compatible</span>
+    </div>
+    <h3>Performance</h3>
+    <p>1.2 TOPS/W on ResNet-20. 40× better energy efficiency vs. A100. Zero active cooling. Edge-deployable.</p>
+    <h3>Materials</h3>
+    <p>SiN (χ⁽³⁾), thin-film LN (χ⁽²⁾), AlN, GeSbSe. All CMOS-foundry compatible.</p>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp }                   from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getFirestore, doc, getDoc,
+         onSnapshot, serverTimestamp,
+         setDoc }                          from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+// ============================================================
+//  STEP 1 — Paste your Firebase config here
+// ============================================================
+const firebaseConfig = {
+  apiKey:            "PASTE_YOUR_API_KEY",
+  authDomain:        "PASTE_YOUR_AUTH_DOMAIN",
+  projectId:         "PASTE_YOUR_PROJECT_ID",
+  storageBucket:     "PASTE_YOUR_STORAGE_BUCKET",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId:             "PASTE_YOUR_APP_ID"
+};
+
+// ============================================================
+//  STEP 2 — Manage access here.
+//  To GRANT access:  add their email + a unique password.
+//  To REVOKE access: change "active" to false  — OR —
+//                    delete their line entirely.
+//  Active sessions are checked every 10 seconds against
+//  this list, so revoking kicks them out mid-session too.
+// ============================================================
+const ACCESS_LIST = {
+  "investor1@vc.com":    { pass: "levu-alpha-7x", active: true  },
+  "investor2@fund.com":  { pass: "levu-beta-4k",  active: true  },
+  "partner@example.com": { pass: "levu-gamma-9z", active: false }, // <-- REVOKED
+  // "new@investor.com": { pass: "levu-delta-3m", active: true  },
+};
+
+const SESSION_MINUTES = 5;
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+let activeEmail     = null;
+let revokeChecker   = null;
+let sessionTimer    = null;
+
+// ── LOGIN ──
+window.attemptLogin = async function() {
+  const email = document.getElementById("emailInput").value.trim().toLowerCase();
+  const pass  = document.getElementById("passInput").value.trim();
+  const btn   = document.getElementById("loginBtn");
+  clearError();
+
+  if (!email || !pass) { showError("Please enter both email and password."); return; }
+
+  const entry = ACCESS_LIST[email];
+
+  // Not in list, wrong password, or revoked
+  if (!entry || entry.pass !== pass) {
+    showError("Invalid credentials. Please check your email and password.");
+    return;
+  }
+  if (!entry.active) {
+    showError("Your access has been revoked. Please contact Levu.");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Verifying...";
+
+  try {
+    // Log the access event to Firestore (for your audit trail)
+    const ref = doc(db, "access_log", btoa(email).replace(/=/g,""));
+    const snap = await getDoc(ref);
+    await setDoc(ref, {
+      email,
+      accessCount: (snap.exists() ? (snap.data().accessCount || 0) : 0) + 1,
+      lastAccess:  serverTimestamp(),
+    }, { merge: true });
+
+    grantAccess(email);
+  } catch(err) {
+    showError("Connection error: " + err.message);
+    btn.disabled = false;
+    btn.textContent = "Access Secure Content";
+  }
+};
+
+// ── GRANT ACCESS ──
+function grantAccess(email) {
+  activeEmail = email;
+  document.getElementById("loginBox").style.display = "none";
+  const content = document.getElementById("content");
+  content.style.display = "block";
+
+  // Watermark
+  const wm = document.getElementById("watermark");
+  wm.textContent = email + "  ·  CONFIDENTIAL  ·  LEVU  ·  " + email + "  ·  CONFIDENTIAL  ·  LEVU";
+  wm.style.display = "flex";
+
+  // Anti-screenshot
+  document.addEventListener("contextmenu", e => e.preventDefault());
+  document.addEventListener("keydown", e => {
+    const blocked =
+      e.key === "PrintScreen" ||
+      (e.metaKey && e.shiftKey && ["3","4","5","6"].includes(e.key)) ||
+      (e.ctrlKey && ["p","s"].includes(e.key.toLowerCase()));
+    if (blocked) {
+      e.preventDefault();
+      content.style.filter = "blur(14px)";
+      setTimeout(() => content.style.filter = "", 2200);
+    }
+  });
+  document.addEventListener("visibilitychange", () => {
+    content.style.filter = document.hidden ? "blur(16px)" : "";
+  });
+
+  // ── REAL-TIME REVOKE CHECKER ──
+  // Polls ACCESS_LIST every 10 seconds. The moment you set
+  // active: false and redeploy, the live session is killed.
+  revokeChecker = setInterval(() => {
+    const entry = ACCESS_LIST[activeEmail];
+    if (!entry || !entry.active) {
+      killSession("revoked");
+    }
+  }, 10000);
+
+  startTimer(SESSION_MINUTES * 60);
+}
+
+// ── TIMER ──
+function startTimer(seconds) {
+  const display = document.getElementById("timerDisplay");
+  let remaining = seconds;
+  sessionTimer = setInterval(() => {
+    remaining--;
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    display.textContent = m + ":" + String(s).padStart(2, "0");
+    if (remaining <= 60) display.classList.add("warn");
+    if (remaining <= 0)  killSession("expired");
+  }, 1000);
+}
+
+// ── KILL SESSION ──
+function killSession(reason) {
+  clearInterval(revokeChecker);
+  clearInterval(sessionTimer);
+  document.getElementById("watermark").style.display = "none";
+
+  const messages = {
+    expired: {
+      title: "Session Expired",
+      body:  "Your 5-minute access window has ended. Please contact Levu if you require additional time."
+    },
+    revoked: {
+      title: "Access Revoked",
+      body:  "Your access to this document has been revoked. Please contact Levu for more information."
+    }
+  };
+
+  const msg = messages[reason] || messages.expired;
+  document.getElementById("content").innerHTML = `
+    <div class="dead-box">
+      <h2>${msg.title}</h2>
+      <p>${msg.body}</p>
+    </div>`;
+}
+
+function showError(msg) {
+  const el = document.getElementById("errorMsg");
+  el.textContent = msg; el.style.display = "block";
+}
+function clearError() {
+  document.getElementById("errorMsg").style.display = "none";
+}
+</script>
+</body>
+</html>
