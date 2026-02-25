@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Research — Levu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;
+  --bg2:#f2faf4;
+  --bg3:#e6f5ea;
+  --dark:#0a1a0d;
+  --card:#ffffff;
+  --accent:#1db954;
+  --accent2:#0d8c3c;
+  --accent3:#a8f0c0;
+  --text:#0a1a0d;
+  --muted:#4a7a58;
+  --border:rgba(29,185,84,0.18);
+  --glow:rgba(29,185,84,0.08);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;max-width:100vw;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:64px;
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 2px 24px rgba(29,185,84,0.08);}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s;padding-bottom:2px;border-bottom:2px solid transparent;}
+.nav-links a:hover{color:var(--dark);}
+.nav-links a.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.nav-cta{padding:9px 22px;border-radius:40px;background:var(--accent);color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s,transform 0.15s;}
+.nav-cta:hover{background:var(--accent2);transform:scale(1.04);}
+
+/* PAGE HERO (inner pages) */
+.page-hero{
+  padding:140px 60px 80px;
+  background:linear-gradient(160deg,#fff 0%,#edfaf3 60%,#d4f2e1 100%);
+  position:relative;overflow:hidden;
+}
+.page-hero-eyebrow{display:inline-block;margin-bottom:18px;padding:5px 16px;border-radius:40px;border:1px solid var(--border);background:rgba(29,185,84,0.07);font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent2);}
+.page-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;color:var(--dark);max-width:800px;margin-bottom:20px;}
+.page-hero h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:1.05rem;color:var(--muted);max-width:620px;line-height:1.8;}
+.page-hero-circle{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(29,185,84,0.11),transparent 70%);}
+.page-hero-circle.c1{width:500px;height:500px;top:-150px;right:-100px;}
+.page-hero-circle.c2{width:300px;height:300px;bottom:-80px;left:-80px;}
+
+/* SECTION SHARED */
+.section-wrap{padding:90px 60px;max-width:1200px;margin:0 auto;}
+.section-label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,3.5vw,2.7rem);font-weight:700;line-height:1.15;letter-spacing:-0.025em;color:var(--dark);margin-bottom:18px;}
+.section-body{font-size:1rem;color:var(--muted);max-width:680px;line-height:1.85;}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:52px;}
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:36px 30px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 50px rgba(29,185,84,0.11);border-color:rgba(29,185,84,0.45);}
+.card-glow{position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(29,185,84,0.1),transparent 70%);transition:transform 0.4s;}
+.card:hover .card-glow{transform:scale(1.6);}
+.card-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
+.card-num{font-family:'Space Grotesk',sans-serif;font-size:2.4rem;font-weight:700;color:var(--accent3);letter-spacing:-0.04em;margin-bottom:8px;line-height:1;}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:var(--dark);margin-bottom:10px;}
+.card-body{font-size:0.9rem;color:var(--muted);line-height:1.8;}
+
+/* DARK BAND */
+.dark-band{background:var(--dark);padding:90px 60px;}
+.dark-band .section-label{color:var(--accent3);}
+.dark-band .section-title{color:#fff;}
+.dark-band .section-body{color:rgba(255,255,255,0.55);}
+.dark-band-inner{max-width:1200px;margin:0 auto;}
+
+/* TWO-COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:52px;}
+.two-col-text p{font-size:0.95rem;color:var(--muted);line-height:1.85;margin-bottom:16px;}
+
+/* TIMELINE */
+.timeline{margin-top:52px;position:relative;padding-left:28px;border-left:2px solid var(--border);}
+.tl-item{margin-bottom:40px;position:relative;}
+.tl-dot{position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 2px var(--accent);}
+.tl-label{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;}
+.tl-title{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:600;color:var(--dark);margin-bottom:6px;}
+.tl-body{font-size:0.9rem;color:var(--muted);line-height:1.75;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);max-width:1200px;margin:0 auto;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:52px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;}
+.footer-logo span{color:var(--accent);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:0.85rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .page-hero,.section-wrap,.dark-band{padding-left:24px;padding-right:24px;}
+  .two-col{grid-template-columns:1fr;gap:40px;}
+  footer{padding:36px 24px;flex-direction:column;text-align:center;}
+  .footer-links{justify-content:center;}
+}
+</style>
+</head><body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Lev<span>u</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" >Home</a></li>
+    <li><a href="architecture.html" >Architecture</a></li>
+    <li><a href="fabrication.html" >Fabrication</a></li>
+    <li><a href="research.html" class='active'>Research</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-circle c1"></div>
+  <div class="page-hero-circle c2"></div>
+  <span class="page-hero-eyebrow">Research & Publications</span>
+  <h1>Pushing the Limits<br/><span class="grad">of Optical Compute</span></h1>
+  <p>Our research spans nonlinear photonics, integrated optics, and all-optical neural networks. We publish openly and collaborate with leading institutions worldwide.</p>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label reveal">Focus Areas</div>
+  <h2 class="section-title reveal">Active Research Tracks</h2>
+  <p class="section-body reveal">Levu's research is organized around four interconnected tracks — each feeding directly into our XPU roadmap.</p>
+  <div class="card-grid">
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">🌊</div><div class="card-title">Nonlinear Integrated Photonics</div><p class="card-body">Engineering χ⁽²⁾ and χ⁽³⁾ nonlinearities in confined waveguide geometries. Phase matching via dispersion engineering and periodic poling.</p></div>
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">🧠</div><div class="card-title">Optical Neural Networks</div><p class="card-body">Mapping transformer and CNN architectures onto coherent optical matrix-vector multipliers. Training methods for hardware-aware optical weight quantization.</p></div>
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">⚛️</div><div class="card-title">Continuous Variable Quantum</div><p class="card-body">All-optical feed-forward protocols for CV-QKD and MBQC. Squeezing generation and homodyne detection on-chip.</p></div>
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">🔧</div><div class="card-title">Photonic Co-Design</div><p class="card-body">Inverse design of nonlinear components using adjoint methods. Fabrication-aware optimization that accounts for etch bias and sidewall roughness.</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="dark-band">
+  <div class="dark-band-inner">
+    <div class="section-label reveal">Timeline</div>
+    <h2 class="section-title reveal">Research Milestones</h2>
+    <p class="section-body reveal">Key results from our lab over the past three years, driving the technology behind the Levu XPU.</p>
+  </div>
+</div>
+
+<div class="section-wrap" style="padding-top:72px;">
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-label">2023 Q2</div>
+      <div class="tl-title">First On-Chip Optical Logic Gate</div>
+      <p class="tl-body">Demonstrated a nonlinear optical NAND gate in SiN waveguide ring resonator with >20 dB extinction ratio and sub-100 fJ switching energy.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-label">2023 Q4</div>
+      <div class="tl-title">Optical Memory Cell — First Bistable PIC</div>
+      <p class="tl-body">Achieved stable optical bistability in an AlN microring, demonstrating write/read/erase cycles at 10 Gbps with no electronic feedback.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-label">2024 Q1</div>
+      <div class="tl-title">All-Optical ADC Prototype</div>
+      <p class="tl-body">First 3-bit all-optical analog-digital converter operating at 40 GSa/s demonstrated on a 4 mm² LN-on-insulator chip.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-label">2024 Q3</div>
+      <div class="tl-title">Cross-Domain XPU Architecture Paper</div>
+      <p class="tl-body">Published architecture paper describing the first unified digital-analog-quantum optical processor, demonstrating GEMM and Boolean workloads on the same chip.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-label">2025 Q1</div>
+      <div class="tl-title">Optical Neural Network Inference at 1 TOPS/W</div>
+      <p class="tl-body">Benchmarked ResNet-20 inference on our analog optical accelerator at 1.2 TOPS/W — 40× better than best-in-class GPU at equivalent batch size.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-label">2025 Q4</div>
+      <div class="tl-title">WDM Multi-Core XPU Tape-Out</div>
+      <p class="tl-body">First 8-wavelength, 4-core XPU tape-out at LIGENTEC foundry. Integration of all four building blocks on a single 6 mm² die.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-wrap">
+  <div class="section-label reveal">Collaborations</div>
+  <h2 class="section-title reveal">Academic & Industry Partners</h2>
+  <div class="card-grid">
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">🏫</div><div class="card-title">University Partners</div><p class="card-body">Joint research programs with CMU, MIT, Tsinghua, and Waterloo covering nonlinear optics, quantum photonics, and neuromorphic computing.</p></div>
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">🏭</div><div class="card-title">Foundry Partners</div><p class="card-body">Active PDK development agreements with imec, LIGENTEC, and GlobalFoundries for SiN and thin-film LN process nodes.</p></div>
+    <div class="card reveal"><div class="card-glow"></div><div class="card-icon">🤝</div><div class="card-title">Open Source</div><p class="card-body">Core simulation tools and component libraries released under MIT license. Community contributions welcome via GitHub.</p></div>
+  </div>
+</div>
+
+
+<footer id="contact">
+  <div class="footer-logo">Lev<span>u</span></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="fabrication.html">Fabrication</a>
+    <a href="research.html">Research</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Levu. All rights reserved.</div>
+</footer>
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 90);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script></body></html>

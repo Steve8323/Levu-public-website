@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fabrication — Levu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;
+  --bg2:#f2faf4;
+  --bg3:#e6f5ea;
+  --dark:#0a1a0d;
+  --card:#ffffff;
+  --accent:#1db954;
+  --accent2:#0d8c3c;
+  --accent3:#a8f0c0;
+  --text:#0a1a0d;
+  --muted:#4a7a58;
+  --border:rgba(29,185,84,0.18);
+  --glow:rgba(29,185,84,0.08);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;max-width:100vw;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:64px;
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 2px 24px rgba(29,185,84,0.08);}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.02em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s;padding-bottom:2px;border-bottom:2px solid transparent;}
+.nav-links a:hover{color:var(--dark);}
+.nav-links a.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.nav-cta{padding:9px 22px;border-radius:40px;background:var(--accent);color:#fff;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s,transform 0.15s;}
+.nav-cta:hover{background:var(--accent2);transform:scale(1.04);}
+
+/* PAGE HERO (inner pages) */
+.page-hero{
+  padding:140px 60px 80px;
+  background:linear-gradient(160deg,#fff 0%,#edfaf3 60%,#d4f2e1 100%);
+  position:relative;overflow:hidden;
+}
+.page-hero-eyebrow{display:inline-block;margin-bottom:18px;padding:5px 16px;border-radius:40px;border:1px solid var(--border);background:rgba(29,185,84,0.07);font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent2);}
+.page-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;color:var(--dark);max-width:800px;margin-bottom:20px;}
+.page-hero h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:1.05rem;color:var(--muted);max-width:620px;line-height:1.8;}
+.page-hero-circle{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(29,185,84,0.11),transparent 70%);}
+.page-hero-circle.c1{width:500px;height:500px;top:-150px;right:-100px;}
+.page-hero-circle.c2{width:300px;height:300px;bottom:-80px;left:-80px;}
+
+/* SECTION SHARED */
+.section-wrap{padding:90px 60px;max-width:1200px;margin:0 auto;}
+.section-label{font-size:0.72rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,3.5vw,2.7rem);font-weight:700;line-height:1.15;letter-spacing:-0.025em;color:var(--dark);margin-bottom:18px;}
+.section-body{font-size:1rem;color:var(--muted);max-width:680px;line-height:1.85;}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:52px;}
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:36px 30px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 50px rgba(29,185,84,0.11);border-color:rgba(29,185,84,0.45);}
+.card-glow{position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(29,185,84,0.1),transparent 70%);transition:transform 0.4s;}
+.card:hover .card-glow{transform:scale(1.6);}
+.card-icon{font-size:1.8rem;margin-bottom:16px;display:block;}
+.card-num{font-family:'Space Grotesk',sans-serif;font-size:2.4rem;font-weight:700;color:var(--accent3);letter-spacing:-0.04em;margin-bottom:8px;line-height:1;}
+.card-title{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:var(--dark);margin-bottom:10px;}
+.card-body{font-size:0.9rem;color:var(--muted);line-height:1.8;}
+
+/* DARK BAND */
+.dark-band{background:var(--dark);padding:90px 60px;}
+.dark-band .section-label{color:var(--accent3);}
+.dark-band .section-title{color:#fff;}
+.dark-band .section-body{color:rgba(255,255,255,0.55);}
+.dark-band-inner{max-width:1200px;margin:0 auto;}
+
+/* TWO-COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;margin-top:52px;}
+.two-col-text p{font-size:0.95rem;color:var(--muted);line-height:1.85;margin-bottom:16px;}
+
+/* TIMELINE */
+.timeline{margin-top:52px;position:relative;padding-left:28px;border-left:2px solid var(--border);}
+.tl-item{margin-bottom:40px;position:relative;}
+.tl-dot{position:absolute;left:-37px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 2px var(--accent);}
+.tl-label{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;}
+.tl-title{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:600;color:var(--dark);margin-bottom:6px;}
+.tl-body{font-size:0.9rem;color:var(--muted);line-height:1.75;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);max-width:1200px;margin:0 auto;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:52px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;}
+.footer-logo span{color:var(--accent);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:0.85rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{font-size:0.78rem;color:rgba(255,255,255,0.25);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .page-hero,.section-wrap,.dark-band{padding-left:24px;padding-right:24px;}
+  .two-col{grid-template-columns:1fr;gap:40px;}
+  footer{padding:36px 24px;flex-direction:column;text-align:center;}
+  .footer-links{justify-content:center;}
+}
+</style>
+</head>
+<style>
+.process-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;margin-top:52px;}
+.process-step{padding:36px 28px;border-right:1px solid var(--border);position:relative;transition:background 0.2s;}
+.process-step:last-child{border-right:none;}
+.process-step:hover{background:var(--bg2);}
+.step-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--accent3);line-height:1;margin-bottom:12px;}
+.step-title{font-family:'Space Grotesk',sans-serif;font-size:0.95rem;font-weight:600;color:var(--dark);margin-bottom:8px;}
+.step-body{font-size:0.85rem;color:var(--muted);line-height:1.75;}
+@media(max-width:900px){.process-steps{grid-template-columns:1fr 1fr;}.process-step{border-right:none;border-bottom:1px solid var(--border);}}
+@media(max-width:500px){.process-steps{grid-template-columns:1fr;}}
+</style>
+<body>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Lev<span>u</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" >Home</a></li>
+    <li><a href="architecture.html" >Architecture</a></li>
+    <li><a href="fabrication.html" class='active'>Fabrication</a></li>
+    <li><a href="research.html" >Research</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-circle c1"></div>
+  <div class="page-hero-circle c2"></div>
+  <span class="page-hero-eyebrow">Photonic Fabrication</span>
+  <h1>From Design to<br/><span class="grad">Silicon Photonics</span></h1>
+  <p>Levu's fabrication process transforms nonlinear optical designs into manufacturable photonic integrated circuits — compatible with standard CMOS foundry flows.</p>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label reveal">Process Overview</div>
+  <h2 class="section-title reveal">How a Levu PIC is Made</h2>
+  <p class="section-body reveal">Each Levu chip goes through a six-stage process, from waveguide design to final optical packaging. We target existing silicon photonics foundries to keep costs low and yield high.</p>
+  <div class="process-steps">
+    <div class="process-step reveal"><div class="step-num">01</div><div class="step-title">Waveguide Design</div><p class="step-body">Inverse-designed waveguide geometries optimized for target nonlinear coefficients and mode confinement.</p></div>
+    <div class="process-step reveal"><div class="step-num">02</div><div class="step-title">Mask Layout</div><p class="step-body">Full-chip GDS layout including adiabatic tapers, directional couplers, and ring resonator arrays.</p></div>
+    <div class="process-step reveal"><div class="step-num">03</div><div class="step-title">Lithography</div><p class="step-body">Deep-UV or e-beam lithography at 180–90 nm node, depending on waveguide feature size requirements.</p></div>
+    <div class="process-step reveal"><div class="step-num">04</div><div class="step-title">Etch & Clad</div><p class="step-body">Reactive ion etch defines waveguide sidewalls. SiO₂ or Al₂O₃ cladding deposits via ALD or PECVD.</p></div>
+    <div class="process-step reveal"><div class="step-num">05</div><div class="step-title">Nonlinear Layer</div><p class="step-body">χ⁽²⁾ or χ⁽³⁾ active material (AlN, LN, SiN, or GeSbSe) integrated via sputtering or wafer bonding.</p></div>
+    <div class="process-step reveal"><div class="step-num">06</div><div class="step-title">Test & Package</div><p class="step-body">Automated optical probe station tests each die. Passing chips are fiber-array packaged for system integration.</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="dark-band">
+  <div class="dark-band-inner">
+    <div class="section-label reveal">Materials</div>
+    <h2 class="section-title reveal">Nonlinear Material Platform</h2>
+    <p class="section-body reveal">The choice of nonlinear material determines the operating wavelength, conversion efficiency, and CMOS compatibility. Levu supports four material platforms.</p>
+    <div class="card-grid" style="margin-top:48px;">
+      <div class="card reveal" style="background:#0d2018;border-color:rgba(29,185,84,0.2);"><div class="card-glow"></div><div class="card-icon">🔵</div><div class="card-title" style="color:#fff;">Silicon Nitride (SiN)</div><p class="card-body">Low loss, CMOS-compatible, strong χ⁽³⁾. Ideal for near-IR and telecom-band nonlinear processing.</p></div>
+      <div class="card reveal" style="background:#0d2018;border-color:rgba(29,185,84,0.2);"><div class="card-glow"></div><div class="card-icon">⚡</div><div class="card-title" style="color:#fff;">Lithium Niobate (LN)</div><p class="card-body">Best-in-class χ⁽²⁾ for SHG and EO modulation. Thin-film LN enables tight mode confinement.</p></div>
+      <div class="card reveal" style="background:#0d2018;border-color:rgba(29,185,84,0.2);"><div class="card-glow"></div><div class="card-icon">🟢</div><div class="card-title" style="color:#fff;">Aluminum Nitride (AlN)</div><p class="card-body">Wide bandgap, UV-transparent, piezoelectric. Strong χ⁽²⁾ with direct CMOS foundry compatibility.</p></div>
+      <div class="card reveal" style="background:#0d2018;border-color:rgba(29,185,84,0.2);"><div class="card-glow"></div><div class="card-icon">🔴</div><div class="card-title" style="color:#fff;">GeSbSe Chalcogenide</div><p class="card-body">Exceptionally high χ⁽³⁾, mid-IR transparency. Enables ultra-low threshold nonlinear switching.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrap">
+  <div class="section-label reveal">Manufacturing</div>
+  <h2 class="section-title reveal">Foundry Strategy</h2>
+  <div class="two-col">
+    <div class="two-col-text reveal">
+      <p>Levu designs are tapeout-ready for major silicon photonics foundries including imec, GlobalFoundries, and LIGENTEC. We use standard PDK-compliant components wherever possible, reserving proprietary nonlinear layers for our differentiated building blocks.</p>
+      <p>Multi-project wafer (MPW) shuttles reduce per-chip NRE costs during development. Full-wafer production runs begin once design freeze is achieved.</p>
+      <p>Our co-design methodology tightly couples fabrication tolerances back into the photonic simulation loop — ensuring what we simulate is what we build.</p>
+    </div>
+    <div class="reveal">
+      <div class="card-grid" style="grid-template-columns:1fr 1fr;margin-top:0;">
+        <div class="card" style="padding:24px 20px;"><div class="card-title" style="font-size:0.95rem;">MPW Shuttle</div><p class="card-body" style="font-size:0.82rem;">Low-cost prototyping via shared wafer runs</p></div>
+        <div class="card" style="padding:24px 20px;"><div class="card-title" style="font-size:0.95rem;">PDK Compliant</div><p class="card-body" style="font-size:0.82rem;">Standard component libraries for fast tapeout</p></div>
+        <div class="card" style="padding:24px 20px;"><div class="card-title" style="font-size:0.95rem;">Co-Design Loop</div><p class="card-body" style="font-size:0.82rem;">Fab tolerances fed back into simulation</p></div>
+        <div class="card" style="padding:24px 20px;"><div class="card-title" style="font-size:0.95rem;">Multi-Foundry</div><p class="card-body" style="font-size:0.82rem;">imec · GlobalFoundries · LIGENTEC</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer id="contact">
+  <div class="footer-logo">Lev<span>u</span></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="fabrication.html">Fabrication</a>
+    <a href="research.html">Research</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Levu. All rights reserved.</div>
+</footer>
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 90);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script></body></html>
