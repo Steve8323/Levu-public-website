@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Levu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;
+  --bg2:#f2faf4;
+  --bg3:#e6f5ea;
+  --dark:#0a1a0d;
+  --card:#ffffff;
+  --accent:#1db954;
+  --accent2:#0d8c3c;
+  --accent3:#a8f0c0;
+  --text:#0a1a0d;
+  --muted:#4a7a58;
+  --border:rgba(29,185,84,0.18);
+  --glow:rgba(29,185,84,0.08);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:64px;
+  background:rgba(255,255,255,0.82);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow 0.3s;
+}
+nav.scrolled{box-shadow:0 2px 24px rgba(29,185,84,0.08);}
+.nav-logo{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.5rem;font-weight:700;color:var(--dark);
+  text-decoration:none;letter-spacing:-0.02em;
+}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:0.875rem;
+  font-weight:500;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--dark);}
+.nav-cta{
+  padding:9px 22px;border-radius:40px;
+  background:var(--accent);color:#fff;
+  font-size:0.85rem;font-weight:600;text-decoration:none;
+  letter-spacing:0.02em;transition:background 0.2s,transform 0.15s;
+}
+.nav-cta:hover{background:var(--accent2);transform:scale(1.04);}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:140px 40px 80px;
+  background:linear-gradient(160deg,#fff 0%,#edfaf3 60%,#d4f2e1 100%);
+  position:relative;overflow:hidden;
+}
+.hero-bg-circle{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(29,185,84,0.13),transparent 70%);
+  animation:pulse-circle 6s ease-in-out infinite;
+}
+.hero-bg-circle.c1{width:700px;height:700px;top:-200px;right:-200px;}
+.hero-bg-circle.c2{width:500px;height:500px;bottom:-100px;left:-150px;animation-delay:3s;}
+@keyframes pulse-circle{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.1);opacity:0.6;}}
+
+.hero-eyebrow{
+  display:inline-block;margin-bottom:24px;
+  padding:6px 18px;border-radius:40px;
+  border:1px solid var(--border);background:rgba(29,185,84,0.07);
+  font-size:0.75rem;font-weight:700;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--accent2);
+}
+.hero h1{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(2.8rem,7vw,5.5rem);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-0.03em;color:var(--dark);
+  max-width:900px;margin-bottom:28px;
+}
+.hero h1 .grad{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:1.15rem;color:var(--muted);
+  max-width:580px;margin-bottom:44px;line-height:1.75;
+}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{
+  padding:15px 34px;border-radius:40px;
+  background:var(--accent);color:#fff;font-weight:700;
+  font-size:0.95rem;text-decoration:none;border:none;cursor:pointer;
+  transition:background 0.2s,transform 0.15s,box-shadow 0.2s;
+  box-shadow:0 4px 20px rgba(29,185,84,0.3);
+}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(29,185,84,0.35);}
+.btn-ghost{
+  padding:15px 34px;border-radius:40px;
+  background:transparent;color:var(--dark);font-weight:600;
+  font-size:0.95rem;text-decoration:none;
+  border:1.5px solid rgba(29,185,84,0.35);cursor:pointer;
+  transition:border-color 0.2s,transform 0.15s;
+}
+.btn-ghost:hover{border-color:var(--accent);transform:translateY(-2px);}
+
+/* ── SCROLL MARQUEE ── */
+.marquee-wrap{
+  width:100%;overflow:hidden;
+  padding:22px 0;background:var(--accent);
+}
+.marquee-track{
+  display:flex;gap:60px;
+  animation:marquee 22s linear infinite;
+  width:max-content;
+}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:0.85rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:#fff;white-space:nowrap;
+}
+.marquee-dot{color:rgba(255,255,255,0.5);margin:0 10px;}
+
+/* ── SECTION SHARED ── */
+.section-wrap{padding:110px 60px;max-width:1200px;margin:0 auto;}
+.section-label{
+  font-size:0.72rem;font-weight:700;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--accent2);margin-bottom:12px;
+}
+.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(1.9rem,3.8vw,2.9rem);
+  font-weight:700;line-height:1.15;
+  letter-spacing:-0.025em;color:var(--dark);
+  margin-bottom:20px;
+}
+.section-body{
+  font-size:1rem;color:var(--muted);
+  max-width:680px;line-height:1.85;
+}
+
+/* ── TECH CARDS ── */
+.tech-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;margin-top:60px;
+}
+.tech-card{
+  background:var(--card);
+  border:1.5px solid var(--border);
+  border-radius:20px;padding:40px 32px;
+  position:relative;overflow:hidden;
+  transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;
+  cursor:default;
+}
+.tech-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 60px rgba(29,185,84,0.12);
+  border-color:rgba(29,185,84,0.5);
+}
+.tech-card .card-glow{
+  position:absolute;top:-40px;right:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(29,185,84,0.12),transparent 70%);
+  transition:transform 0.4s;
+}
+.tech-card:hover .card-glow{transform:scale(1.5);}
+.card-num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2.8rem;font-weight:700;
+  color:var(--accent3);letter-spacing:-0.04em;
+  margin-bottom:8px;line-height:1;
+}
+.card-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.15rem;font-weight:600;color:var(--dark);margin-bottom:12px;
+}
+.card-body{font-size:0.9rem;color:var(--muted);line-height:1.8;}
+
+/* ── FULL-BLEED ARCH ── */
+.arch-band{
+  background:var(--dark);
+  padding:110px 60px;
+}
+.arch-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.arch-band .section-label{color:var(--accent3);}
+.arch-band .section-title{color:#fff;}
+.arch-band .section-body{color:rgba(255,255,255,0.55);}
+.arch-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.arch-cell{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;padding:24px 20px;
+  transition:background 0.25s,border-color 0.25s,transform 0.25s;
+  cursor:default;
+}
+.arch-cell:hover{
+  background:rgba(29,185,84,0.12);
+  border-color:rgba(29,185,84,0.35);
+  transform:scale(1.03);
+}
+.arch-cell-label{
+  font-size:0.68rem;text-transform:uppercase;
+  letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:6px;
+}
+.arch-cell-val{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1rem;font-weight:600;color:#fff;
+}
+
+/* ── STATS STRIP ── */
+.stats-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+}
+.stat-item{
+  padding:50px 36px;
+  border-right:1px solid var(--border);
+  text-align:center;
+  transition:background 0.2s;
+}
+.stat-item:last-child{border-right:none;}
+.stat-item:hover{background:var(--bg3);}
+.stat-num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:2.4rem;font-weight:700;
+  color:var(--accent);letter-spacing:-0.04em;
+  display:block;margin-bottom:6px;
+}
+.stat-label{font-size:0.85rem;color:var(--muted);font-weight:500;}
+
+/* ── ACCORDION FAQ ── */
+.faq-wrap{max-width:780px;margin:56px auto 0;}
+.faq-item{
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+.faq-q{
+  width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:24px 0;background:none;border:none;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.05rem;font-weight:600;color:var(--dark);
+  text-align:left;gap:20px;
+  transition:color 0.2s;
+}
+.faq-q:hover{color:var(--accent2);}
+.faq-icon{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--bg2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:1rem;font-weight:700;color:var(--accent);
+  transition:transform 0.3s,background 0.2s;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--accent3);}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1),padding 0.3s;
+  font-size:0.95rem;color:var(--muted);line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:300px;padding-bottom:24px;}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--dark);
+  padding:60px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+}
+footer .footer-logo{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:1.3rem;font-weight:700;color:#fff;
+}
+footer .footer-logo span{color:var(--accent);}
+.footer-links{display:flex;gap:28px;}
+.footer-links a{font-size:0.85rem;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#fff;}
+.footer-copy{font-size:0.8rem;color:rgba(255,255,255,0.3);}
+
+/* ── FADE-IN-UP ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 24px;}
+  .nav-links{display:none;}
+  .section-wrap,.arch-band{padding:80px 24px;}
+  .arch-inner{grid-template-columns:1fr;gap:48px;}
+  .stats-strip{grid-template-columns:1fr 1fr;}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);}
+  footer{padding:40px 24px;flex-direction:column;text-align:center;}
+  .footer-links{justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Lev<span>u</span></a>
+  <ul class="nav-links">
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#performance">Performance</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <span class="hero-eyebrow">All-Optical Cross-Domain Computing</span>
+  <h1>Beyond von Neumann.<br/><span class="grad">Powered by Light.</span></h1>
+  <p class="hero-sub">Levu builds photonic integrated circuits that enable true nonlinear all-optical computation — spanning digital, analog, and quantum domains on a single chip.</p>
+  <div class="hero-btns">
+    <a href="#technology" class="btn-primary">Explore Technology</a>
+    <a href="#architecture" class="btn-ghost">Our Architecture ↓</a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">Nonlinear Photonics</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Optical Logic Gates</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Analog AI Acceleration</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Optical Memory</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Quantum Feed-Forward</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">All-Optical ADC</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">XPU Architecture</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Edge Deployment</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">WDM Parallelism</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Nonlinear Photonics</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Optical Logic Gates</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Analog AI Acceleration</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Optical Memory</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Quantum Feed-Forward</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">All-Optical ADC</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">XPU Architecture</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Edge Deployment</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">WDM Parallelism</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="100">0</span>
+    <span class="stat-label">× Less Power vs. Silicon</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="3">0</span>
+    <span class="stat-label">Compute Domains Unified</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="0" data-suffix=" K°C">0</span>
+    <span class="stat-label">Active Cooling Required</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="∞" data-symbol="∞"> </span>
+    <span class="stat-label">Parallelization via WDM</span>
+  </div>
+</div>
+
+<!-- TECHNOLOGY -->
+<div class="section-wrap" id="technology">
+  <div class="reveal"><div class="section-label">Core Technology</div></div>
+  <h2 class="section-title reveal">Nonlinear Optics on a Chip</h2>
+  <p class="section-body reveal">
+    A computer that can only perform linear operations is not very interesting. Every general-purpose processor needs nonlinear operations — notoriously hard in optics. Our technology is built around generating these nonlinearities in a photonic integrated circuit (PIC), enabling true all-optical cross-domain computation.
+  </p>
+  <div class="tech-grid">
+    <div class="tech-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-num">01</div>
+      <div class="card-title">Nonlinear PIC Components</div>
+      <p class="card-body">Our integrated nonlinear optical components enable optical logic gates in the digital domain, complex mathematical operations in the analog domain, and all-optical feed-forward for continuous variables in the quantum domain.</p>
+    </div>
+    <div class="tech-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-num">02</div>
+      <div class="card-title">Optical Memory</div>
+      <p class="card-body">True in-chip optical memory — a critical missing piece for general-purpose all-optical processors. Our nonlinear building blocks make it possible without any conversion back to electronics.</p>
+    </div>
+    <div class="tech-card reveal">
+      <div class="card-glow"></div>
+      <div class="card-num">03</div>
+      <div class="card-title">All-Optical ADC</div>
+      <p class="card-body">By combining our optical logic and analog math capabilities, we built the first all-optical analog-digital converter — bridging compute domains on a single photonic chip.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="arch-band" id="architecture">
+  <div class="arch-inner">
+    <div>
+      <div class="section-label reveal">XPU Architecture</div>
+      <h2 class="section-title reveal">Cross-Domain Processing</h2>
+      <p class="section-body reveal">Our unique architecture goes beyond von Neumann. By combining diverse optical compute blocks — digital, analog, quantum — we've devised the first architecture that crosses all three domains. A unified programming interface lets developers take advantage of optical parallelism without managing the underlying photonics.</p>
+      <br/>
+      <a href="#faq" class="btn-primary" style="display:inline-block;margin-top:12px;">Learn More</a>
+    </div>
+    <div class="arch-grid reveal">
+      <div class="arch-cell">
+        <div class="arch-cell-label">Digital Domain</div>
+        <div class="arch-cell-val">Optical Logic Gates</div>
+      </div>
+      <div class="arch-cell">
+        <div class="arch-cell-label">Analog Domain</div>
+        <div class="arch-cell-val">Math Operations</div>
+      </div>
+      <div class="arch-cell">
+        <div class="arch-cell-label">Quantum Domain</div>
+        <div class="arch-cell-val">CV Feed-Forward</div>
+      </div>
+      <div class="arch-cell">
+        <div class="arch-cell-label">Bridge</div>
+        <div class="arch-cell-val">All-Optical ADC</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PERFORMANCE -->
+<div class="section-wrap" id="performance">
+  <div class="section-label reveal">Performance &amp; Deployment</div>
+  <h2 class="section-title reveal">Unlimited Parallelism.<br/>Minimal Power.</h2>
+  <p class="section-body reveal">
+    There is no limit to the parallelization of our XPUs — by adding more cores or stacking wavelengths through WDM. Low power consumption means low heat: no exotic cooling, no special environments. Deploy high-performance compute at the edge, in rugged environments, anywhere.
+  </p>
+</div>
+
+<!-- FAQ -->
+<div class="section-wrap" id="faq" style="padding-top:0;">
+  <div class="section-label reveal">FAQ</div>
+  <h2 class="section-title reveal">Common Questions</h2>
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <button class="faq-q">What makes Levu's nonlinear photonics different?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Generating optical nonlinearities on a photonic integrated circuit is notoriously difficult. Levu's core know-how is precisely this — creating stable, efficient nonlinear components in silicon photonics that enable true logic, memory, and analog compute without leaving the optical domain.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Can the XPU run general-purpose workloads?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Yes. By combining optical logic gates, memory, and an all-optical ADC, Levu's XPU can function as a general-purpose digital optical CPU, an analog AI accelerator, or an optical quantum processor — all on a single PIC.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">How does the power consumption compare to conventional chips?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Optical computing operates on photons rather than electrons, eliminating resistive heating. Our processors require no active cooling solutions and can be deployed outside traditional data center environments — at the edge, in the field, or in space.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">What is the programming model for developers?<span class="faq-icon">+</span></button>
+      <div class="faq-a">The entire XPU architecture is designed around an easy-to-use programming interface that abstracts away the underlying photonic details. Developers can take advantage of massive optical parallelism without needing expertise in photonics.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">Lev<span>u</span></div>
+  <div class="footer-links">
+    <a href="#">Technology</a>
+    <a href="#">Architecture</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 Levu. All rights reserved.</div>
+</footer>
+
+<script>
+// ── Nav scroll shadow ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── Reveal on scroll ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+// ── Counter animation ──
+function animateCounter(el) {
+  const target = el.getAttribute('data-target');
+  const symbol = el.getAttribute('data-symbol');
+  const suffix = el.getAttribute('data-suffix') || '';
+  if (symbol) { el.textContent = symbol; return; }
+  const end = parseInt(target, 10);
+  if (isNaN(end)) { el.textContent = target; return; }
+  let start = 0;
+  const duration = 1800;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * end) + (suffix || (end > 1 ? 'x' : ''));
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObs.observe(el));
+
+// ── FAQ Accordion ──
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ── Parallax hero circles ──
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  document.querySelectorAll('.hero-bg-circle').forEach((c, i) => {
+    c.style.transform = `translateY(${y * (i === 0 ? 0.18 : 0.1)}px)`;
+  });
+});
+</script>
+</body>
+</html>
